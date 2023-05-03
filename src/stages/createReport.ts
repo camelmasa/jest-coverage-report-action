@@ -4,7 +4,6 @@ import { getReportTag } from '../constants/getReportTag';
 import { GITHUB_MESSAGE_SIZE_LIMIT } from '../constants/GITHUB_MESSAGE_SIZE_LIMIT';
 import { formatCoverage } from '../format/formatCoverage';
 import { formatErrors } from '../format/formatErrors';
-import { formatRunReport } from '../format/formatRunReport';
 import { formatThresholdResults } from '../format/formatThresholdResults';
 import { getFailureDetails } from '../format/getFailureDetails';
 import { getTestRunSummary } from '../format/summary/getTestRunSummary';
@@ -40,14 +39,12 @@ export const createReport = (
         summary: getTestRunSummary(headReport),
         failures: getFailureDetails(headReport),
     };
-    const formattedReport = formatRunReport(runReport);
 
     let templateText = insertArgs(template, {
         body: [
             formattedErrors,
             formattedThresholdResults,
             coverage,
-            formattedReport,
         ].join('\n'),
         dir: workingDirectory || '',
         tag: getReportTag(options),
@@ -70,7 +67,6 @@ export const createReport = (
                 formattedErrors,
                 formattedThresholdResults,
                 reducedCoverage,
-                formattedReport,
             ].join('\n'),
             dir: workingDirectory || '',
             tag: getReportTag(options),
